@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia|Roboto|Poppins">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    #greet {
+        font-family: Poppins;
+        color: teal;
+    }
+    #description {
+        font-family: sofia;
+        color: darkolivegreen;
+        text-align: center;
+    }
+    table {
+        border-style:ridge;
+        border-collapse: collapse;
+        text-align: center;
+        width:75%;
+        border-color: teal;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    th, td {
+        border-style: groove;
+        border-collapse: collapse;
+        font-family: poppins;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+    }
+    th {color: teal; font-family: Sofia; font-size: large;}
+    tr:hover {background-color:#f7ae60;}
+    tr:nth-child(even) {background-color: #f7cf60;}
+    td {color: darkolivegreen;}
+    #addrecord {
+        font-family: Poppins;
+        color: #d67a09;
+    }
+    #deleterecord {
+        font-family: poppins;
+        color: orangered;
+    }
+</style>
+
+<body>
+    <h1 id="greet">Hello {{ username }}</h1>
+    <h2 id="description">This is the console</h2>
+
+    <table>
+        <tr>
+            <th>patient_name</th>
+            <th>patient_age</th>
+            <th>patient_gender</th>
+            <th>date_of_attendance</th>
+            <th>patient_address</th>
+            <th>patient_phone_number</th>
+            <th>is_allergic</th>
+            <th>patient_description_file</th>
+        </tr>
+        
+        {% for row in userobject %}
+        <tr>
+            <td>{{ row.patient_name }}</td>
+            <td>{{ row.patient_age }}</td>
+            <td>{{ row.patient_gender }}</td>
+            <td>{{ row.date_of_attendance }}</td>
+            <td>{{ row.patient_address }}</td>
+            <td>{{ row.patient_phone_number }}</td>
+            <td>{{ row.is_allergic }}</td>
+            <td>{{ row.patient_description_file }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+    <br><br>
+    <a href="{% url 'add_record' %}" id="addrecord"> Click here to add a new record </a>    <br>
+    <a href="{% url 'delete_record' %}" id="deleterecord">Click here to delete a record</a>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia|Roboto|Poppins">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deleting the records</title>
+</head>
+
+<style>
+    input {
+        padding: 2%;
+        border-radius: 4px;
+        border-color: teal;
+        font-family: Poppins;
+        color: teal;
+    }
+    table {
+        border-collapse: separate;
+        border-spacing: 0px 2px;
+        text-align: justify;
+    }
+    label {
+        color: darkolivegreen;
+        font-family: poppins;
+    }
+    button{
+        font-family: Sofia;
+        color: teal;
+        background-color: white;
+        border-radius: 12px;
+        border-color: teal;
+    }
+</style>
+
+<body>
+    <form action="{% url 'delete_record' %}" method="POST">
+        {% csrf_token %}
+        <table>
+            <tbody>
+                <tr>
+                <th><label for="patient_name">Patient Name:</label></th>
+                <td><input type="text" required=True name='patient_name' placeholder="Enter the name of the patient"> <br> </td>
+                </tr>
+                <tr>
+                    <th><label for="date_of_attendance"> Date of Attendance: </label></th>
+                    <td><input type="date" required=True name='date_of_attendance' placeholder="Enter the date of record"> <br><br></td>
+                </tr>
+            </tbody>
+        </table>
+        <button> Are you sure? </button>
+
+    </form>
+</body>
+</html>

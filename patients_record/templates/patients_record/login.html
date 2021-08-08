@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia|Roboto|Poppins">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello there! Login or Sign up</title>
+</head>
+
+<style>
+#greet{
+    font-family: Poppins;
+    color: teal;
+    text-align: center;
+}
+::-webkit-input-placeholder {
+    color: olive;
+    font-family: Poppins;
+  }
+#button{
+    font-family: Sofia;
+    color: teal;
+    background-color: white;
+    border-radius: 12px;
+    border-color: teal;
+}
+input {
+    border-radius: 4px;
+    border-color: teal;
+    font-family: Poppins;
+    color: teal;
+}
+#form{
+    text-align: center;
+}
+#proceed {
+    font-family: Sofia;
+}
+</style>
+
+<body>
+    <h2 id="greet">Hi! Login here to use the console</h2>
+
+    {% if not username %}
+
+    <form action="{% url 'console' %}" method="POST" id="form">
+        {% csrf_token %}
+        <ul>
+            <input name="user_name" type="text" placeholder="Enter your user name" required=True> <br> <br>
+            <input name="user_password" type="password" placeholder="Enter user password" required=True> <br><br>
+            <input type="submit" id="button" value="Log in!">
+        </ul>
+    </form>
+
+    {% else %}
+    <h2 id="proceed"><a href="{% url 'console' %}"> {{ username }} Please Click here</a></h2>
+    {% endif %}
+</body>
+</html>

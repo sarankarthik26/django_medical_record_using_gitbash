@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia|Roboto|Poppins">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>index page</title>
+</head>
+<style>
+    #brand {font-family:Poppins;
+     color: teal;
+     text-align: center;
+    
+    }
+    #motto {font-family: Sofia;
+        color: darkolivegreen;
+        text-align: center;
+        }
+    .greet {text-align: center;
+        font-family: Sofia;
+        color: teal;}
+    #services {
+        font-family: Sofia;
+        color: teal;
+    }
+    #admin {
+        font-family: Poppins;
+        text-align: center;
+    }
+    a:link {
+        color: teal;
+        background-color: transparent;
+        text-decoration: none;
+      }
+      
+      a:visited {
+        color: darkolivegreen;
+        background-color: transparent;
+        text-decoration: none;
+      }
+      
+      a:hover {
+        color: olive;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+      
+      a:active {
+        color: green;
+        background-color: transparent;
+        text-decoration: underline;
+      }
+
+</style>
+<body>
+    <h1 id="brand">Welcome to Brand</h1>
+    <h2 id="motto">Motto</h2>
+    <br>
+
+    {% if user_status %}
+    <h3 class="greet">Hello {{ user_status }}!</h3>
+    {% else %}
+    <h3 class="greet">Hello User!</h3>
+    {% endif %}
+
+    <ul id="services">
+        <li><a href="about"> About </a></li>
+        <li><a href="login"> Records </a></li>
+
+        {% if not user_status %}
+        <li><a href="login"> Login </a></li>
+        <li><a href="signin"> Sign in </a></li>
+        {% else %}
+        <li><a href="logout"> Log out </a></li>
+        {% endif %}
+        
+    </ul>
+    <footer id="admin"><a href="/admin/">Admin</a></footer>
+
+</body>
+</html>
