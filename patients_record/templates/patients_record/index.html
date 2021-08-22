@@ -77,6 +77,9 @@
         
     </ul>
     <footer id="admin"><a href="/admin/">Admin</a></footer>
+    {% if visits %}
+    <p> You have visited the page: {{ visits }} </p>
+    {% endif %}
 
 </body>
 </html>

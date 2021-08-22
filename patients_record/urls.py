@@ -12,5 +12,8 @@ urlpatterns = [
     path('logout/',views.logging_out,name="logout"),
     path('add_record/',views.add_record_to_table,name="add_record"),
     path('delete_record/',views.delete_record_from_table,name="delete_record"),
+    path('addding_doctor/',views.add_doctor,name="add_doctor"),
+    path('adding_patient/',views.add_patient,name="add_patient"),
+    path('console/view_details/<int:key>/<str:pk>/',views.view_details,name="view_details"),
     #path('console/table/<slug:slug_holder>/',views.record),
 ]

@@ -13,7 +13,7 @@
         font-family: Poppins;
         color: teal;
     }
-    #description {
+    #description, h3 {
         font-family: sofia;
         color: darkolivegreen;
         text-align: center;
@@ -52,36 +52,48 @@
     <h1 id="greet">Hello {{ username }}</h1>
     <h2 id="description">This is the console</h2>
 
+    <form action="{% url 'console' %}" method="POST">
+        {% csrf_token %}
+        {% if not bool %}
+        <h3>Search by patient: <input name="search_patient" type="text"> <button>Search -></button> </h3>
+        {% else %}
+        <h3>Search by doctor: <input name="search_doctor" type="text"> <button>Search -></button> </h3>
+        {% endif %}
+    </form>
+
     <table>
         <tr>
-            <th>patient_name</th>
-            <th>patient_age</th>
-            <th>patient_gender</th>
-            <th>date_of_attendance</th>
-            <th>patient_address</th>
-            <th>patient_phone_number</th>
-            <th>is_allergic</th>
-            <th>patient_description_file</th>
+            <th>Patient Name</th>
+            <th>Email</th>
+            <th>Doctor Name</th>
+            <th>Doctor Email</th>
+            <th>allergic?</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>description</th>
         </tr>
         
         {% for row in userobject %}
         <tr>
-            <td>{{ row.patient_name }}</td>
-            <td>{{ row.patient_age }}</td>
-            <td>{{ row.patient_gender }}</td>
-            <td>{{ row.date_of_attendance }}</td>
-            <td>{{ row.patient_address }}</td>
-            <td>{{ row.patient_phone_number }}</td>
+            <td><a href="{% url 'view_details' key=0 pk=row.patient.patient_name %} "> {{ row.patient.patient_name }} </a></td>
+            <td>{{ row.patient.user.email }}</td>
+            <td><a href="{% url 'view_details' key=1 pk=row.doctor.doctor_name %} "> {{ row.doctor.doctor_name }} </a> </td>
+            <td>{{ row.doctor.user.email }}</td>
             <td>{{ row.is_allergic }}</td>
-            <td>{{ row.patient_description_file }}</td>
+            <td>{{ row.date_of_attendance }}</td>
+            <td>{{ row.time_of_attendance }}</td>
+            <td> <a href="{% url 'view_details' key=2 pk=row %} "> {{ row.patient_description_file|slice:"0:25" }} </a></td>
         </tr>
         {% endfor %}
 
     </table>
 
     <br><br>
-    <a href="{% url 'add_record' %}" id="addrecord"> Click here to add a new record </a>    <br>
+
+    {% if not bool %}
+    <a href="{% url 'add_record' %}" id="addrecord"> Click here to add a new record </a> <br>
     <a href="{% url 'delete_record' %}" id="deleterecord">Click here to delete a record</a>
+    {% endif %}
 
 </body>
 </html>

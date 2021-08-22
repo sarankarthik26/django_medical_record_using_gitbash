@@ -1,0 +1,34 @@
+{% extends 'patients_record/add_record.html' %}
+{% block detailform %}
+
+{% if not key %}
+    <h3> Patient Name:  {{obj.patient_name}} </h3>
+    <h3> Patient Email:  {{obj.user.email}} </h3>
+    <h3> Patient age:  {{obj.patient_age}} </h3>
+    <h3> Patient gender: {{obj.patient_gender}} </h3>
+    <h3> Bloodgroup: {{obj.patient_bloodgroup}} </h3>
+    <h3> Phone Number: {{obj.patient_phone_number}} </h3>
+    <h3> Patient Address: {{obj.patient_address}} </h3>
+
+{% elif key == 1 %}
+    <h3> Doctor Name: {{obj.doctor_name}} </h3>
+    <h3> Designation: {{obj.doctor_designation}} </h3>
+    <h3> Email: {{obj.user.email}} </h3>
+    <h3> Age: {{obj.doctor_age}} </h3>
+    <h3> Gender: {{obj.doctor_gender}} </h3>
+    <h3> Phone Number: {{obj.doctor_phone_number}} </h3>
+    <h3> Address: {{obj.doctor_address}} </h3>
+
+{% else %}
+<h3> Patient Name: {{ obj.patient.patient_name }} </h3>
+<h3> Email: {{ obj.patient.user.email }}</h3>
+<h3>Doctor Name: {{ obj.doctor.doctor_name }} </h3>
+<h3>Email: {{ obj.doctor.user.email }}</h3>
+<h3>Phone: {{ obj.doctor.doctor_phone_number }}</h3>
+<h3>Is Alleric?: {{ obj.is_allergic }}</h3>
+<h3>Date: {{ obj.date_of_attendance }}</h3>
+<h3>Time: {{ obj.time_of_attendance }}</h3>
+<h3>Description: {{ obj.patient_description_file }}</h3>
+
+{% endif %}
+{% endblock %}
