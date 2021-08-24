@@ -126,11 +126,12 @@ STATIC_URL = '/static/'
 #Email
 #https://myaccount.google.com/lesssecureapps -> https://accounts.google.com/DisplayUnlockCaptcha -> Not needed
 #https://myaccount.google.com/apppasswords
-#EMAIL_HOST = 'smtp.gmail.com'
-#EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'fill your email'
-# EMAIL_HOST_PASSWORD = 'fill up your password'
-# EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'beautifulcovai@gmail.com'
+EMAIL_HOST_PASSWORD = 'app_password'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

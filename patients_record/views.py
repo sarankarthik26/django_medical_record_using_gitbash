@@ -6,6 +6,8 @@ from django.contrib.auth import login, logout, authenticate
 from .forms import add_record, doctor_form, patient_form, delete_record_form
 from django.contrib.auth.decorators import login_required
 import re
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -21,6 +23,19 @@ def index(request):
 
 def about(request):
     return render(request,'patients_record/about.html')
+
+def contact(request):
+    if request.method=='POST':
+            contact_name = request.POST['contact_name']
+            contact_email = request.POST['contact_email']
+            contact_message = request.POST['contact_message']
+            subject = "Got a message from "+contact_name
+            recipient_list = [settings.EMAIL_HOST_USER,]
+            send_mail( subject, contact_message, contact_email, recipient_list )
+            message = contact_message+" Sent"
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'index'})
+    else:
+        return render(request, 'patients_record/contact.html')
 
 def console(request):
     if request.method == 'POST':
@@ -47,13 +62,15 @@ def console(request):
                 if user is not None:
                     login(request,user)
                 else:
-                    return HttpResponse("Not found in user database")
+                    message = "Not found in user database"
+                    return render(request,'patients_record/message_or_response.html',{'message':message,'link':'login'})
     else:
         user = None
         if request.user.is_authenticated:
             user = request.user
         else:
-            return HttpResponse("User not logged in :(")
+            message = "User not logged in :("
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'login'})
 
     pre_email = User.objects.get(username=user).email
     reg_email = re.search(r'@test.com',pre_email)
@@ -86,7 +103,8 @@ def register(request):
 
         if user_password == user_password2:
             if User.objects.filter(username=user_name).exists() or User.objects.filter(email=user_email).exists():
-                return HttpResponse("User name / Email taken already")
+                message = "User name / Email taken already"
+                return render(request,'patients_record/message_or_response.html',{'message':message,'link':'signin'})
             else:
                 user = User.objects.create_user(username=user_name,password=user_password,email=user_email)
                 user.save();
@@ -98,7 +116,8 @@ def register(request):
                 else:
                     return render(request,'patients_record/doctor_details.html',{'form':doctor_form})
         else:
-            return HttpResponse("Passwords didn't match :(")
+            message = "Passwords didn't match :("
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'signin'})
                 
     return redirect('/')
 
@@ -110,7 +129,8 @@ def add_record_to_table(request):
             obj = doctor_form.save()
             return redirect("/console/")
         else:
-            return HttpResponse("Invalid data")
+            message = "Invalid Data"
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'add_record'})
     else:
         add_form = add_record()
         return render(request, 'patients_record/add_record.html',{'form':add_form})
@@ -139,7 +159,8 @@ def add_doctor(request):
             obj.user = User.objects.get(username=request.user.username)
             obj.save()
         else:
-            return HttpResponse("invalid data")
+            message = "Invalid Data"
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'add_doctor'})
     return redirect('/')
 
 def add_patient(request):
@@ -150,7 +171,8 @@ def add_patient(request):
             obj.user = User.objects.get(username=request.user.username)
             obj.save()
         else:
-            return HttpResponse("invalid data")
+            message = "Invalid Data"
+            return render(request,'patients_record/message_or_response.html',{'message':message,'link':'add_patient'})
     return redirect('/')
 
 @login_required(login_url='/login/')

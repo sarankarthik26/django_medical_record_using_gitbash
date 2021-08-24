@@ -1,0 +1,19 @@
+{% extends 'patients_record/about.html' %}
+
+{% block content %}
+    <h1 id="header">Contact Us</h1>
+    <p id="define"> Feel free to contact us! </p>
+
+    <form action="{% url 'contact' %}" method="POST">
+        {% csrf_token %}
+
+        <label for="contact_name">First name:</label><br>
+        <input type="text" name="contact_name" required><br>
+        <label for="contact_email" >Email id:</label><br>
+        <input type="email" name="contact_email" required><br>
+        <label for="contact_message">Message: </label><br>
+        <input type="text" name="contact_message" required><br><br>
+        <input type="submit" value="Send your message ->">
+        
+    </form>
+{% endblock %}

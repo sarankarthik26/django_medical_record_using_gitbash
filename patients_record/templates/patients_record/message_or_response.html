@@ -1,0 +1,11 @@
+{% extends 'patients_record/about.html' %}
+
+{% block content %}
+    <h1 id="header">{{ message }}</h1>
+    <p id="define"> {{ message2 }} </p>
+    <br><br><br>
+    <form action="{% url link %}">
+        <input type="submit" value="Return" />
+    </form>
+
+{% endblock %}
