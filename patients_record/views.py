@@ -42,6 +42,8 @@ def console(request):
 
         try:
             search_name = request.POST['search_patient']
+            if search_name == "":
+                raise ValueError('Searched by doctor')
             user = request.user
             pre_email = User.objects.get(username=user).email
             if re.search(r'@admin.com',pre_email):
