@@ -44,16 +44,24 @@ def console(request):
             search_name = request.POST['search_patient']
             user = request.user
             pre_email = User.objects.get(username=user).email
-            q = record_table.objects.filter(doctor__user__email=pre_email,patient__patient_name__icontains = search_name).order_by('-date_of_attendance')
-            return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':False})
+            if re.search(r'@admin.com',pre_email):
+                q = record_table.objects.filter(patient__patient_name__icontains = search_name).order_by('-date_of_attendance')
+                return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':2})
+            else:
+                q = record_table.objects.filter(doctor__user__email=pre_email,patient__patient_name__icontains = search_name).order_by('-date_of_attendance')
+                return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':0})
 
         except:
             try:
                 search_name = request.POST['search_doctor']
                 user = request.user
                 pre_email = User.objects.get(username=user).email
-                q = record_table.objects.filter(patient__user__email=pre_email,doctor__doctor_name__icontains = search_name).order_by('-date_of_attendance')
-                return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':True})
+                if re.search(r'@admin.com',pre_email):
+                    q = record_table.objects.filter(doctor__doctor_name__icontains = search_name).order_by('-date_of_attendance')
+                    return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':2})
+                else:
+                    q = record_table.objects.filter(patient__user__email=pre_email,doctor__doctor_name__icontains = search_name).order_by('-date_of_attendance')
+                    return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':1})
             except:
                 username = request.POST['user_name']
                 userpassword = request.POST['user_password']
@@ -74,14 +82,15 @@ def console(request):
 
     pre_email = User.objects.get(username=user).email
     reg_email = re.search(r'@test.com',pre_email)
-    val = False
+    val = 0
     if reg_email:
         q = record_table.objects.filter(doctor__user__email=pre_email).order_by('-date_of_attendance')
     elif re.search(r'@admin.com',pre_email):
         q = record_table.objects.all().order_by('-date_of_attendance')
+        val = 2
     else:
         q = record_table.objects.filter(patient__user__email=pre_email).order_by('-date_of_attendance')
-        val = True
+        val = 1
     return render(request, 'patients_record/console.html',{'username':user,'userobject':q,'bool':val})
 
 

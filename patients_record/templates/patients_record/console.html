@@ -54,9 +54,12 @@
 
     <form action="{% url 'console' %}" method="POST">
         {% csrf_token %}
-        {% if not bool %}
+        {% if bool == 0 %}
         <h3>Search by patient: <input name="search_patient" type="text"> <button>Search -></button> </h3>
+        {% elif bool == 1 %}
+        <h3>Search by doctor: <input name="search_doctor" type="text"> <button>Search -></button> </h3>
         {% else %}
+        <h3>Search by patient: <input name="search_patient" type="text"> <button>Search -></button> </h3>
         <h3>Search by doctor: <input name="search_doctor" type="text"> <button>Search -></button> </h3>
         {% endif %}
     </form>
